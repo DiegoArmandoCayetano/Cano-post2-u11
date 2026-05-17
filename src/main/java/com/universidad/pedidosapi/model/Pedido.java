@@ -1,5 +1,6 @@
 package com.universidad.pedidosapi.model;
 
+
 public class Pedido {
 
     private Long id;
@@ -14,6 +15,6 @@ public class Pedido {
     }
 
     public Long getId() {
-        return 1L;
+        return id;
     }
 }

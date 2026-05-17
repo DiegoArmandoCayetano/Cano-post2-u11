@@ -1,9 +1,8 @@
 package com.universidad.pedidosapi.repository;
 
-import org.springframework.stereotype.Repository;
-
 import com.universidad.pedidosapi.model.Pedido;
 import com.universidad.pedidosapi.model.Producto;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class PedidoRepository {

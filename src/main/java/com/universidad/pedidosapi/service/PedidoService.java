@@ -1,13 +1,12 @@
 package com.universidad.pedidosapi.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.universidad.pedidosapi.model.Pedido;
 import com.universidad.pedidosapi.model.Producto;
 import com.universidad.pedidosapi.repository.PedidoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PedidoService {
@@ -15,19 +14,18 @@ public class PedidoService {
     @Autowired
     private PedidoRepository repo;
 
-    public String procesarPedido(
-            Long clienteId,
-            String clienteNombre,
-            String clienteEmail,
-            String clienteTelefono,
-            String clienteDireccion,
-            String clienteCiudad,
-            String clienteCodigoPostal,
-            List<Long> productosIds,
-            List<Integer> cantidades,
-            String metodoPago,
-            boolean esUrgente,
-            String codigoDescuento) {
+    public String procesarPedido(Long clienteId,
+                                 String clienteNombre,
+                                 String clienteEmail,
+                                 String clienteTelefono,
+                                 String clienteDireccion,
+                                 String clienteCiudad,
+                                 String clienteCodigoPostal,
+                                 List<Long> productosIds,
+                                 List<Integer> cantidades,
+                                 String metodoPago,
+                                 boolean esUrgente,
+                                 String codigoDescuento) {
 
         if (clienteId == null
                 || clienteNombre == null
@@ -62,11 +60,8 @@ public class PedidoService {
             total = total * 0.80;
         }
 
-        System.out.println("Enviando email a: "
-                + clienteEmail);
-
-        System.out.println("Pedido urgente: "
-                + esUrgente);
+        System.out.println("Enviando email a: " + clienteEmail);
+        System.out.println("Pedido urgente: " + esUrgente);
 
         Pedido pedido =
                 new Pedido(clienteId, clienteNombre, total);
