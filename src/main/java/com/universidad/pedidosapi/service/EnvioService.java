@@ -1,59 +1,45 @@
 package com.universidad.pedidosapi.service;
 
-
 import com.universidad.pedidosapi.model.Cliente;
 import com.universidad.pedidosapi.model.Pedido;
+import com.universidad.pedidosapi.strategy.EstrategiaEnvio;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class EnvioService {
 
-    // Switch Statement smell — CC = 5
-    public double calcularEnvio(Pedido pedido, String tipoEnvio) {
+    private final Map<String, EstrategiaEnvio> estrategias;
 
-        switch (tipoEnvio) {
+    public EnvioService(
+            Map<String, EstrategiaEnvio> estrategias) {
 
-            case "ESTANDAR":
-                return pedido.getTotal() > 50 ? 0 : 5.99;
-
-            case "EXPRESS":
-                return 12.99;
-
-            case "MISMO_DIA":
-                return 24.99;
-
-            case "GRATIS":
-                return 0;
-
-            default:
-                throw new IllegalArgumentException(
-                        "Tipo de envio desconocido: "
-                                + tipoEnvio);
-        }
+        this.estrategias = estrategias;
     }
 
-    // Arrow code — CC = 6
+    public double calcularEnvio(
+            Pedido pedido,
+            String tipo) {
+
+        return Optional.ofNullable(
+                        estrategias.get(tipo))
+                .orElseThrow(
+                        () -> new IllegalArgumentException(tipo))
+                .calcularCosto(pedido);
+    }
+
     public String aprobarCredito(
             Cliente c,
             double monto) {
 
-        if (c != null) {
+        if (c == null) return "RECHAZADO";
+        if (!c.isActivo()) return "RECHAZADO";
+        if (c.getScore() < 600) return "RECHAZADO";
+        if (monto <= 0) return "RECHAZADO";
+        if (monto > c.getLimiteCredito()) return "RECHAZADO";
 
-            if (c.isActivo()) {
-
-                if (c.getScore() >= 600) {
-
-                    if (monto > 0) {
-
-                        if (monto <= c.getLimiteCredito()) {
-
-                            return "APROBADO";
-                        }
-                    }
-                }
-            }
-        }
-
-        return "RECHAZADO";
+        return "APROBADO";
     }
 }
