@@ -7,6 +7,7 @@ public class Pedido {
     private Long clienteId;
     private String clienteNombre;
     private double total;
+    
 
     public Pedido(Long clienteId, String clienteNombre, double total) {
         this.clienteId = clienteId;
@@ -17,4 +18,12 @@ public class Pedido {
     public Long getId() {
         return id;
     }
+
+    public double getTotal() {
+    return total;
+}
+
+public void setTotal(double total) {
+    this.total = total;
+}
 }
